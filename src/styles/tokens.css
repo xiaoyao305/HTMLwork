@@ -1,0 +1,36 @@
+:root {
+  --bg: #07070e;
+  --bg-2: #0b0b16;
+  --surface: rgba(255, 255, 255, 0.055);
+  --surface-2: rgba(255, 255, 255, 0.085);
+  --surface-3: rgba(255, 255, 255, 0.12);
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --text: #f3f2fb;
+  --dim: #b3b1c8;
+  --mute: #7c7a93;
+
+  --mint: #3df5e0;
+  --mint-deep: #12c9b6;
+  --mint-soft: rgba(61, 245, 224, 0.12);
+  --pink: #ff4fd8;
+  --pink-soft: rgba(255, 79, 216, 0.12);
+  --amber: #ffd84d;
+  --amber-soft: rgba(255, 216, 77, 0.12);
+  --violet: #9b8cff;
+  --violet-soft: rgba(155, 140, 255, 0.12);
+  --danger: #ff6b8a;
+
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+
+  --glow-mint: 0 0 26px rgba(61, 245, 224, 0.26);
+  --glow-amber: 0 0 26px rgba(255, 216, 77, 0.22);
+  --glow-pink: 0 0 26px rgba(255, 79, 216, 0.22);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  --nav-height: 76px;
+}

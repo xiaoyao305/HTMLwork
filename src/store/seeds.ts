@@ -1,0 +1,293 @@
+import type { AppState, CheckIn, HealthRecord, Pet, Task } from './types';
+import { addDays, toDateStr, todayStr } from '../lib/date';
+
+function birthdayAgo(years: number, months: number): string {
+  const d = new Date();
+  d.setMonth(d.getMonth() - (years * 12 + months));
+  return toDateStr(d);
+}
+
+function atTime(date: string, time: string): string {
+  return `${date}T${time}:00`;
+}
+
+export function createSeedState(): AppState {
+  const today = todayStr();
+  const pets: Pet[] = [
+    {
+      id: 'pet-naitang',
+      name: '奶糖',
+      avatar: '🐱',
+      species: 'cat',
+      breed: '英国短毛猫',
+      birthday: birthdayAgo(3, 2),
+      weightKg: 4.35,
+      allergies: ['乳制品'],
+      avoid: ['生鱼'],
+      concerns: ['体重偏重，零食要控制', '换季容易掉毛'],
+      energy: 'mid',
+      createdAt: atTime(addDays(today, -120), '10:20'),
+    },
+    {
+      id: 'pet-afu',
+      name: '阿福',
+      avatar: '🐶',
+      species: 'dog',
+      breed: '柯基',
+      birthday: birthdayAgo(5, 4),
+      weightKg: 11.3,
+      allergies: ['鸡肉'],
+      avoid: ['玉米'],
+      concerns: ['髋关节需要留意', '每周两次慢跑'],
+      energy: 'high',
+      createdAt: atTime(addDays(today, -200), '16:00'),
+    },
+  ];
+
+  const tasks: Task[] = [
+    {
+      id: 'task-feed-cat',
+      petId: 'pet-naitang',
+      kind: 'feed',
+      title: '早餐 · 湿粮 40g',
+      time: '08:00',
+      frequency: { type: 'daily' },
+      enabled: true,
+      note: '拌一小勺南瓜泥',
+    },
+    {
+      id: 'task-water-cat',
+      petId: 'pet-naitang',
+      kind: 'water',
+      title: '换一碗新鲜水',
+      time: '09:00',
+      frequency: { type: 'daily' },
+      enabled: true,
+    },
+    {
+      id: 'task-litter-cat',
+      petId: 'pet-naitang',
+      kind: 'litter',
+      title: '铲猫砂 + 检查尿团',
+      time: '21:00',
+      frequency: { type: 'daily' },
+      enabled: true,
+    },
+    {
+      id: 'task-groom-cat',
+      petId: 'pet-naitang',
+      kind: 'groom',
+      title: '梳毛 5 分钟',
+      time: '20:30',
+      frequency: { type: 'weekly', days: [3, 6] },
+      enabled: true,
+    },
+    {
+      id: 'task-deworm-cat',
+      petId: 'pet-naitang',
+      kind: 'deworm',
+      title: '体内外驱虫',
+      time: '10:00',
+      frequency: { type: 'interval', everyDays: 30, anchor: addDays(today, -12) },
+      enabled: true,
+      note: '按体重确认剂量',
+    },
+    {
+      id: 'task-vaccine-cat',
+      petId: 'pet-naitang',
+      kind: 'vaccine',
+      title: '疫苗加强针',
+      time: '11:00',
+      frequency: { type: 'once', date: addDays(today, 14) },
+      enabled: true,
+      note: '提前一天预约医院',
+    },
+    {
+      id: 'task-feed-dog',
+      petId: 'pet-afu',
+      kind: 'feed',
+      title: '早餐 · 犬粮 110g',
+      time: '07:30',
+      frequency: { type: 'daily' },
+      enabled: true,
+    },
+    {
+      id: 'task-walk-dog',
+      petId: 'pet-afu',
+      kind: 'walk',
+      title: '傍晚遛弯 30 分钟',
+      time: '18:30',
+      frequency: { type: 'daily' },
+      enabled: true,
+      note: '走慢一点，留意后腿',
+    },
+    {
+      id: 'task-toilet-dog',
+      petId: 'pet-afu',
+      kind: 'litter',
+      title: '清理厕所尿垫',
+      time: '12:00',
+      frequency: { type: 'daily' },
+      enabled: true,
+    },
+    {
+      id: 'task-med-dog',
+      petId: 'pet-afu',
+      kind: 'med',
+      title: '关节营养片 1 粒',
+      time: '09:00',
+      frequency: { type: 'daily' },
+      enabled: true,
+      note: '拌在早餐里，观察食欲',
+    },
+    {
+      id: 'task-groom-dog',
+      petId: 'pet-afu',
+      kind: 'groom',
+      title: '洗澡 + 吹干',
+      time: '19:30',
+      frequency: { type: 'interval', everyDays: 14, anchor: addDays(today, -9) },
+      enabled: true,
+    },
+    {
+      id: 'task-vet-dog',
+      petId: 'pet-afu',
+      kind: 'vet',
+      title: '骨科复诊',
+      time: '15:00',
+      frequency: { type: 'once', date: addDays(today, 5) },
+      enabled: true,
+      note: '带上近几次体重记录',
+    },
+  ];
+
+  const checkIns: CheckIn[] = [
+    {
+      id: 'chk-1',
+      taskId: 'task-feed-cat',
+      petId: 'pet-naitang',
+      date: today,
+      at: atTime(today, '08:06'),
+      kind: 'feed',
+      title: '早餐 · 湿粮 40g',
+    },
+    {
+      id: 'chk-2',
+      taskId: 'task-water-cat',
+      petId: 'pet-naitang',
+      date: today,
+      at: atTime(today, '09:12'),
+      kind: 'water',
+      title: '换一碗新鲜水',
+    },
+    {
+      id: 'chk-3',
+      taskId: 'task-feed-dog',
+      petId: 'pet-afu',
+      date: today,
+      at: atTime(today, '07:40'),
+      kind: 'feed',
+      title: '早餐 · 犬粮 110g',
+    },
+    {
+      id: 'chk-4',
+      taskId: 'task-walk-dog',
+      petId: 'pet-afu',
+      date: addDays(today, -1),
+      at: atTime(addDays(today, -1), '18:45'),
+      kind: 'walk',
+      title: '傍晚遛弯 30 分钟',
+    },
+    {
+      id: 'chk-5',
+      taskId: 'task-med-dog',
+      petId: 'pet-afu',
+      date: addDays(today, -1),
+      at: atTime(addDays(today, -1), '09:05'),
+      kind: 'med',
+      title: '关节营养片 1 粒',
+    },
+    {
+      id: 'chk-6',
+      taskId: 'task-litter-cat',
+      petId: 'pet-naitang',
+      date: addDays(today, -1),
+      at: atTime(addDays(today, -1), '21:10'),
+      kind: 'litter',
+      title: '铲猫砂 + 检查尿团',
+    },
+  ];
+
+  const health: HealthRecord[] = [
+    {
+      id: 'hr-1',
+      petId: 'pet-naitang',
+      date: addDays(today, -28),
+      weightKg: 4.2,
+      tags: ['体重'],
+      note: '换粮第一周，食欲正常',
+    },
+    {
+      id: 'hr-2',
+      petId: 'pet-naitang',
+      date: addDays(today, -14),
+      weightKg: 4.3,
+      tags: ['体重'],
+    },
+    {
+      id: 'hr-3',
+      petId: 'pet-naitang',
+      date: addDays(today, -6),
+      weightKg: 4.28,
+      tags: ['体重', '驱虫'],
+      note: '体外驱虫，精神很好',
+    },
+    {
+      id: 'hr-4',
+      petId: 'pet-naitang',
+      date: addDays(today, -2),
+      weightKg: 4.35,
+      tags: ['体重'],
+      note: '零食略多，接下来收一收',
+    },
+    {
+      id: 'hr-5',
+      petId: 'pet-afu',
+      date: addDays(today, -30),
+      weightKg: 11.4,
+      tags: ['体重', '疫苗'],
+      note: '年度疫苗完成',
+    },
+    {
+      id: 'hr-6',
+      petId: 'pet-afu',
+      date: addDays(today, -16),
+      weightKg: 11.2,
+      tags: ['体重'],
+      note: '慢跑后体重下降一点',
+    },
+    {
+      id: 'hr-7',
+      petId: 'pet-afu',
+      date: addDays(today, -2),
+      weightKg: 11.3,
+      tags: ['体重', '用药'],
+      note: '关节片吃到第二周，暂无不适',
+    },
+  ];
+
+  return {
+    version: 1,
+    pets,
+    activePetId: pets[0].id,
+    tasks,
+    checkIns,
+    health,
+    foodFavorites: [],
+    foodUnsuitable: [],
+    pantry: [],
+    playFavorites: [],
+    playLogs: [],
+    remindersOn: true,
+  };
+}
